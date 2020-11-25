@@ -1,18 +1,15 @@
 <template>
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <MainPage></MainPage>
+   <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
+  <Example></Example>
 </template>
 
 <script>
-
-//import HelloWorld from './components/HelloWorld.vue'
-
-import MainPage from "@/components/MainPage";
+import Example from './components/Example.vue'
 
 export default {
   name: 'App',
   components: {
-    MainPage
+   Example
   }
 }
 </script>

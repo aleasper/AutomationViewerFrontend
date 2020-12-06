@@ -10,14 +10,23 @@
 <script>
 export default {
   data() {
-    return{
+    return {
       mess: ''
     }
   },
   methods: {
-     sendData() {
-       console.log(this.mess)
-      }
+    async sendData() {
+      const response = await fetch('https://cors-anywhere.herokuapp.com/https://automation-viewer-backend.herokuapp.com/vk_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          app_id: this.mess
+        })
+      })
+      console.log(response)
+    }
   }
 }
 </script>

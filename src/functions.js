@@ -1,5 +1,4 @@
- export default{
-    async sendData(url, data) {
+ export async  function sendData(url, data) {
         const response = await fetch(url, {
           method: 'POST',
           mode: 'cors', // no-cors, *cors, same-origin
@@ -15,4 +14,3 @@
           return await null;
         }
     }
- }

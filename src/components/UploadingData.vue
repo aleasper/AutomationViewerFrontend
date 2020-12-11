@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {sendData} from '../functions.js'
+import {sendData} from '@/functions.js'
 
 export default {
   name: 'UploadingData',

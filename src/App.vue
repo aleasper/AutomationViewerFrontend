@@ -3,18 +3,15 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      <button v-on:click="goToSecondPage">Second page</button>
     </div>
     <router-view/>
   </div>
 </template>
+
 <script>
 export default {
   name: 'App',
   methods: {
-    goToSecondPage(){
-      console.log('go to second page');
-    }
   }
 }
 </script>

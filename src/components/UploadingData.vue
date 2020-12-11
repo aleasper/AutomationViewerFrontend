@@ -8,26 +8,10 @@
 </template>
 
 <script>
-//TODO Вынести в отдельный файл
-/* Вне Vue компонента, т.к. это отдельная функция не имеющая отношения к компоненту*/
-async function sendData(url, data) {
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors', // no-cors, *cors, same-origin
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  if (response.ok){
-    return await response.json();
-  } else {
-    console.error(`Fetch err to ${url} with: ${response.status}`);
-    return await null;
-  }
-}
+import {sendData} from '../functions.js'
 
 export default {
+  name: 'UploadingData',
   data() {
     return {
       mess: ''
@@ -35,7 +19,7 @@ export default {
   },
   methods: {
     printVKData(){
-      let url = 'http://127.0.0.1:8000/vk_data';
+      let url = 'https://automation-viewer-backend.herokuapp.com/vk_data';
       let data = {
         'app_id': this.mess
       };

@@ -1,6 +1,5 @@
 <template>
   <div class="org-label-text">
-    <p>Aleasper NPO</p>
     <h1>Введите текст</h1>
     <input type="text" v-model="mess">
     <button @click="printVKData">Отправить текст в консоль бразуера</button>

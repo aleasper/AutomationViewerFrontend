@@ -1,17 +1,14 @@
 <template>
   <div>
     <div class="home">
-      <img alt="Vue logo" src="../assets/logo.png">
-      <HelloWorld/>
-      <router-link tag="button" v-if="isHidden" v-on:click="isHidden = !isHidden"  to="/secondPage" >Следующая страница</router-link>
+      <DevInfo></DevInfo>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import DevInfo from "@/components/DevInfo";
 export default {
   name: 'Home',
   data() {
@@ -20,7 +17,7 @@ export default {
     }
   },
   components: {
-    HelloWorld
+    DevInfo
   }
 }
 </script>

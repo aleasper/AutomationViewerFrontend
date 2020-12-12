@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="dev-info-div">
     <div class="org-label-text">
       <p>Aleasper NPO</p>
     </div>
     <div>
-      <p>Страница находится в разработке</p>
+      <p>Приложение находится в разработке</p>
       <p>https://github.com/aleasper/AutomationViewerFrontend</p>
     </div>
   </div>
@@ -12,11 +12,14 @@
 
 <script>
 export default {
-  name: "MainPage"
+  name: "DevInfo"
 }
 </script>
 
 <style scoped>
+.dev-info-div{
+  margin: 10px;
+}
 .org-label-text{
   font-size: 22px;
 }

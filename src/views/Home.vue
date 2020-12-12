@@ -2,6 +2,7 @@
   <div>
     <div class="home">
       <DevInfo></DevInfo>
+      <v-btn v-on:click="goToStat">Go to statistics</v-btn>
     </div>
   </div>
 </template>
@@ -15,6 +16,11 @@ export default {
     return {
       isHidden: true
     }
+  },
+  methods:{
+    goToStat() {
+      this.$router.push({ path: '/statistics' });
+    },
   },
   components: {
     DevInfo

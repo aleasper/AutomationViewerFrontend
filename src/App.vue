@@ -4,7 +4,7 @@
 
     >
       <v-app-bar
-          color= #c8a696
+          color= #cd5c5c
           dark
       >
 
@@ -20,9 +20,11 @@
           <h2>Automation Viewer</h2>
         </div>
         <div id="nav">
-          <router-link to="/">Home</router-link> |
-          <router-link to="/about">About</router-link> |
-          <router-link to="/statistics">Statistics</router-link>
+          <router-link to="/">Главная</router-link> |
+          <router-link to="/statistics">Статистика</router-link> |
+          <router-link to="/about">О разработчиках</router-link> |
+          <router-link to="/authorization">Авторизация</router-link> |
+          <router-link to="/registration">Регистрация</router-link>
         </div>
         <v-spacer></v-spacer>
       </v-app-bar>
@@ -63,7 +65,7 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: white;
+  color: ghostwhite;
 }
 
 #nav a.router-link-exact-active {
@@ -75,6 +77,6 @@ export default {
   padding: 0;
   width: 100%;
   height: 100%;
-  /*background-image: url('./assets/gra.png');*/
+  background-image: url('./assets/gra.png');
 }
 </style>

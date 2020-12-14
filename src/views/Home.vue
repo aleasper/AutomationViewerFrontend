@@ -2,7 +2,7 @@
   <div>
     <div class="home">
       <DevInfo></DevInfo>
-      <v-btn v-on:click="goToStat">Go to statistics</v-btn>
+      <v-btn v-on:click="goToStat">Перейти к статистике</v-btn>
     </div>
   </div>
 </template>

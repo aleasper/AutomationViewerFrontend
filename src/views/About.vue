@@ -1,5 +1,15 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div class="org-label-text">
+      <p>Aleasper NPO</p>
+      <p>https://github.com/aleasper/AutomationViewerFrontend</p>
+    </div>
   </div>
 </template>
+
+<style>
+.org-label-text{
+  font-size: 22px;
+  color: antiquewhite;
+}
+</style>

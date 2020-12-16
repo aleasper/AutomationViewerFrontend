@@ -18,7 +18,7 @@
         <v-btn
             class="get-app-data-btn"
             v-on:click="getStat"
-        >Get statistics</v-btn>
+        >Статистика</v-btn>
       </v-col>
     </v-row>
     <div class="display-data-div">
@@ -42,19 +42,19 @@ export default {
     appId: '',
     tableHeaders: [
       {
-        text: 'Resource',
+        text: 'Источники',
         value: 'name'
       },
       {
-        text: 'Likes',
+        text: 'Понравилось',
         value: 'likes'
       },
       {
-        text: 'Comments',
+        text: 'Комментарии',
         value: 'comments'
       },
       {
-        text: 'Reposts',
+        text: 'Поделились',
         value: 'reposts'
       }
     ],

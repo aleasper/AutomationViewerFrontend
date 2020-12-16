@@ -11,6 +11,6 @@
           return await response.json();
         } else {
           console.error(`Fetch err to ${url} with: ${response.status}`);
-          return await null;
+          return response.json();
         }
     }

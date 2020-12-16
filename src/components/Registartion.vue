@@ -18,8 +18,9 @@
         <v-card-text>
           <v-text-field
             label="Логин"
-            value=""
-          ></v-text-field>
+            v-model="login"
+          >
+          </v-text-field>
           <span class="caption grey--text text--darken-1">
             Этот логин вы будете использовать для входа в свою учетную запись
           </span>
@@ -31,11 +32,15 @@
           <v-text-field
             label="Пароль"
             type="password"
-          ></v-text-field>
+            v-model="pass"
+          >
+          </v-text-field>
           <v-text-field
             label="Повторите пароль"
             type="password"
-          ></v-text-field>
+            v-model="passRep"
+          >
+          </v-text-field>
           <span class="caption grey--text text--darken-1">
             Пожалуйста введите пароль для окончания регистрации
           </span>
@@ -58,9 +63,20 @@
 
     <v-divider></v-divider>
 
+    <v-alert
+      :value="alert"
+      color="red"
+      dark
+      border="top"
+      icon="mdi-home"
+      transition="scale-transition"
+    >
+      Ошибка! {{mess}}
+     </v-alert>
+
     <v-card-actions>
       <v-btn
-        :disabled="step === 1"
+        :disabled="step === 1 && step === 3 "
         text
         @click="step--"
       >
@@ -71,7 +87,7 @@
         :disabled="step === 3"
         color="primary"
         depressed
-        @click="step++"
+         @click="printData"
       >
         Далее
       </v-btn>
@@ -80,11 +96,18 @@
 </template>
 
 <script>
+
+  import {sendData} from "@/functions";
+
   export default {
     data: () => ({
       step: 1,
+      login: '',
+      pass: '',
+      passRep:'',
+      alert: false,
+      mess: ''
     }),
-
     computed: {
       currentTitle () {
         switch (this.step) {
@@ -94,5 +117,53 @@
         }
       },
     },
+    methods: {
+      printData() {
+        if (this.step == 1) {
+          if (this.login == '') {
+            this.mess = "Введите логин"
+            this.alert = true
+          } else {
+            this.step++
+            this.alert = false
+          }
+        } else if (this.step == 2) {
+          if (this.pass == '' || this.pass != this.passRep)
+          {
+            this.mess = "Неверно введен пароль"
+            this.alert = true
+          }
+          else
+            {
+            this.funcRegistr();
+            }
+        }
+      },
+      funcRegistr(){
+        let url = 'https://automation-viewer-backend.herokuapp.com/register';
+        let data = {
+          'login': this.login,
+          'password': this.pass
+        };
+        sendData(url, data).then( res => {
+          console.log(res);
+          if (res['ok']) {
+         this.step++
+        //this.$router.push('/statistics')
+        }
+        else {
+          this.mess = "Данный пользователь уже существует"
+          this.alert = true
+        }
+        }).catch(er => {
+          console.error(er);
+        })
+        let res = sendData(url, data);
+        console.log('res: ', res);
+      }
+  },
+    mounted() {
+      localStorage.setItem('authorized', 'false');
+    }
   }
 </script>

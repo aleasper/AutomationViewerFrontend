@@ -23,8 +23,7 @@
           <router-link to="/">Главная</router-link> |
           <router-link to="/statistics">Статистика</router-link> |
           <router-link to="/about">О разработчиках</router-link> |
-          <router-link to="/authorization">Авторизация</router-link> |
-          <router-link to="/registration">Регистрация</router-link>
+          <router-link to="/authorization">Авторизация</router-link>
         </div>
         <v-spacer></v-spacer>
       </v-app-bar>
@@ -46,8 +45,13 @@ export default {
   },
 
   data: () => ({
-    //
   }),
+  methods: {
+  },
+  watch: {
+  },
+  updated() {
+  }
 };
 </script>
 <style>

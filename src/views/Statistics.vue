@@ -14,6 +14,16 @@
         >
         </v-text-field>
       </v-col>
+       <v-alert
+          :value="alert"
+          color="red"
+          dark
+          border="top"
+          icon="mdi-home"
+          transition="scale-transition"
+        >
+          Ошибка! {{error}}
+         </v-alert>
       <v-col
           md="1"
       >
@@ -31,6 +41,17 @@
           class="elevation-1"
           multi-sort
       ></v-data-table>
+      <v-divider></v-divider>
+      <v-btn
+      :loading="loading3"
+      :disabled="loading3"
+      color=""
+      class="get-app-data-btn"
+      @click="loader = 'loading3'"
+    >
+      Загрузить данные в .xlsx
+      <v-icon right dark>mdi-cloud-upload</v-icon>
+    </v-btn>
     </div>
   </div>
 </template>
@@ -42,6 +63,10 @@ export default {
   name: "Statistics",
   data: () => ({
     appId: '',
+    alert: false,
+    error: '',
+    loader: null,
+    loading3: false,
     tableHeaders: [
       {
         text: 'Источники',
@@ -62,6 +87,16 @@ export default {
     ],
     tableItems: [],
   }),
+   watch: {
+     loader() {
+       const l = this.loader
+       this[l] = !this[l]
+
+       setTimeout(() => (this[l] = false), 3000)
+
+       this.loader = null
+     },
+   },
   methods:{
     getStat(){
       let url = 'https://automation-viewer-backend.herokuapp.com/vk_data';
@@ -69,11 +104,15 @@ export default {
         'app_id': this.appId
       };
       sendData(url, data).then( res => {
-        console.log(res);
-        if (res !== []){
-          for (let i in res['app_info']){
+        console.log(res['app_info']);
+        if (res['app_info'].length !== 0){
+          for (let i in res['app_info']) {
             this.tableItems.push(res['app_info'][i]['info']);
           }
+        }
+        else {
+          this.error = "Данное приложение не привязано к Automation Viewer, пожалуйста проверьте ввод данных"
+          this.alert = true
         }
       }).catch(er => {
         console.error(er);

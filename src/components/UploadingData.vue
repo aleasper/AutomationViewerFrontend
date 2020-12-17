@@ -1,8 +1,24 @@
 <template>
   <div class="org-label-text">
-    <h1>Введите текст</h1>
-    <input type="text" v-model="mess">
-    <button @click="printVKData">Отправить текст в консоль бразуера</button>
+        <h1>Введите текст</h1>
+        <input type="text" v-model="mess">
+        <button @click="printVKData">Отправить текст в консоль бразуера</button>
+        <v-alert
+          :value="alert"
+          color="red"
+          dark
+          border="top"
+          icon="mdi-home"
+          transition="scale-transition"
+        >
+          Ошибка! {{error}}
+         </v-alert>
+        <v-btn
+            text
+            @click="step--"
+          >
+            Назад!
+        </v-btn>
   </div>
 </template>
 
@@ -13,7 +29,9 @@ export default {
   name: 'UploadingData',
   data() {
     return {
-      mess: ''
+      mess: '',
+      alert: false,
+      error: '',
     }
   },
   methods: {
@@ -24,6 +42,14 @@ export default {
       };
       sendData(url, data).then( res => {
         console.log(res);
+        if (res['app_info' == 'Array(0)']){
+          this.error = "Данное приложение не привязано к Automation Viewer, пожалуйста проверьте ввод данных"
+          this.alert = true
+        }
+        else {
+          this.error = "yee"
+          this.alert = true
+        }
       }).catch(er => {
         console.error(er);
       })

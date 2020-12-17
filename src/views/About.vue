@@ -2,6 +2,7 @@
   <div class="about">
     <div class="org-label-text">
       <p>Aleasper NPO</p>
+      <p>Приложение находится в разработке</p>
       <p>https://github.com/aleasper/AutomationViewerFrontend</p>
     </div>
   </div>

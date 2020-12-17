@@ -41,6 +41,7 @@
           color="indigo"
           depressed
           v-on:click="auth"
+          :loading="loading"
       >
         Войти
       </v-btn>
@@ -71,12 +72,14 @@ export default {
     login: '',
     password: '',
     alert: false,
+    loading: false,
   }),
   watch:{
 
   },
   methods: {
     auth: function (){
+      this.loading = true;
       let url = 'https://automation-viewer-backend.herokuapp.com/login';
       let data = {
         'login': this.login,
@@ -86,11 +89,14 @@ export default {
         console.log(res);
         if (res['ok']){
           this.authorized = true;
-          this.$router.push('/statistics')
+          this.$router.push('/statistics');
+          this.$store.commit('setAuth');
         } else {
           this.alert = true
           this.authorized = false;
+          this.$store.commit('disableAuth');
         }
+        this.loading = false;
       }).catch( er => {
         console.error(er);
       })

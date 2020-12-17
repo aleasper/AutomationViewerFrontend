@@ -2,7 +2,7 @@
   <div>
     <div class="home">
       <DevInfo></DevInfo>
-      <v-btn v-on:click="goToStat">Перейти к статистике</v-btn>
+      <v-btn v-if="auth" v-on:click="goToStat">Перейти к статистике</v-btn>
     </div>
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
     goToStat() {
       this.$router.push({ path: '/statistics' });
     },
+  },
+  computed: {
+    auth: function (){
+      return this.$store.state.auth;
+    }
   },
   components: {
     DevInfo

@@ -9,6 +9,8 @@
             v-model="appId"
             outlined
             label="Application id"
+            color="white"
+            dark
         >
         </v-text-field>
       </v-col>
@@ -18,7 +20,7 @@
         <v-btn
             class="get-app-data-btn"
             v-on:click="getStat"
-        >Статистика</v-btn>
+        >Получить данные</v-btn>
       </v-col>
     </v-row>
     <div class="display-data-div">
@@ -84,6 +86,11 @@ export default {
 </script>
 
 <style scoped>
+
+.v-text-field--outlined >>> fieldset {
+  border-color: rgba(255, 255, 255, 1);
+  color: white;
+}
 
 .statistics-div{
   margin: 4px 0;

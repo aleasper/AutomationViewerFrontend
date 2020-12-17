@@ -21,7 +21,7 @@
         </div>
         <div id="nav">
           <router-link to="/">Главная</router-link> |
-          <router-link to="/statistics">Статистика</router-link> |
+          <router-link v-if="isAuth" to="/statistics">Статистика</router-link> |
           <router-link to="/about">О разработчиках</router-link> |
           <router-link to="/authorization">Авторизация</router-link>
         </div>
@@ -49,6 +49,11 @@ export default {
   methods: {
   },
   watch: {
+  },
+  computed:{
+    isAuth(){
+      return this.$store.state.auth;
+    }
   },
   updated() {
   }

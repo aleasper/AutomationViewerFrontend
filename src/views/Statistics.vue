@@ -14,50 +14,82 @@
         >
         </v-text-field>
       </v-col>
-       <v-alert
+      <v-alert
           :value="alert"
           color="red"
           dark
           border="top"
-          icon="mdi-home"
           transition="scale-transition"
-        >
-          Ошибка! {{error}}
-         </v-alert>
+      >
+        Ошибка! {{error}}
+      </v-alert>
       <v-col
           md="1"
       >
         <v-btn
             class="get-app-data-btn"
             v-on:click="getStat"
+            :loading="loadingData"
         >Получить данные</v-btn>
       </v-col>
     </v-row>
-    <div class="display-data-div">
-      <v-data-table
-          :headers="tableHeaders"
-          :items="tableItems"
-          :items-per-page="10"
-          class="elevation-1"
-          multi-sort
-      ></v-data-table>
-      <v-divider></v-divider>
-      <v-btn
-      :loading="loading3"
-      :disabled="loading3"
-      color=""
-      class="get-app-data-btn"
-      @click="loader = 'loading3'"
-    >
-      Загрузить данные в .xlsx
-      <v-icon right dark>mdi-cloud-upload</v-icon>
-    </v-btn>
-    </div>
+    <v-row>
+      <div class="display-data-div">
+        <v-data-table
+            :headers="tableHeaders"
+            :items="tableItems"
+            :items-per-page="5"
+            class="elevation-1"
+            multi-sort
+        ></v-data-table>
+        <v-btn
+            class="get-app-data-btn"
+        >Сохранить таблицу в .xlsx</v-btn>
+      </div>
+    </v-row>
+    <v-row>
+      <v-card
+          v-if="top.length !== 0"
+          class="mx-auto"
+      >
+        <v-list-item two-line>
+          <v-list-item-content>
+            <v-list-item-title>Больше всего лайков</v-list-item-title>
+            <v-list-item-subtitle>{{m_liked['info']['name']}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item two-line>
+          <v-list-item-content>
+            <v-list-item-title>Больше всего комментариев</v-list-item-title>
+            <v-list-item-subtitle>{{m_commented['info']['name']}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item two-line>
+          <v-list-item-content>
+            <v-list-item-title>Больше всего репостов</v-list-item-title>
+            <v-list-item-subtitle>{{m_reposted['info']['name']}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item two-line>
+          <v-list-item-content>
+            <v-list-item-title>Наиболее релевантные источники</v-list-item-title>
+            <v-list-item-subtitle v-for="(ref, i) in top" :key="i">{{ref['info']['name']}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+      </v-card>
+    </v-row>
   </div>
 </template>
 
 <script>
-import {sendData} from '@/functions.js'
+import {getRequest} from '@/functions.js'
 
 export default {
   name: "Statistics",
@@ -86,37 +118,73 @@ export default {
       }
     ],
     tableItems: [],
+    loadingData: false,
+    m_liked: '',
+    m_commented: '',
+    m_reposted: '',
+    top: [],
   }),
-   watch: {
-     loader() {
-       const l = this.loader
-       this[l] = !this[l]
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
 
-       setTimeout(() => (this[l] = false), 3000)
+      setTimeout(() => (this[l] = false), 3000)
 
-       this.loader = null
-     },
-   },
+      this.loader = null
+    },
+  },
   methods:{
     getStat(){
-      let url = 'https://automation-viewer-backend.herokuapp.com/vk_data';
-      let data = {
-        'app_id': this.appId
-      };
-      sendData(url, data).then( res => {
-        console.log(res['app_info']);
-        if (res['app_info'].length !== 0){
-          for (let i in res['app_info']) {
-            this.tableItems.push(res['app_info'][i]['info']);
+      this.tableItems = [];
+      this.top = [];
+      this.m_liked = '';
+      this.m_commented = '';
+      this.m_reposted = '';
+      if (sessionStorage.getItem('AV_login') != null && sessionStorage.getItem('AV_password') != null) {
+        this.loadingData = true;
+        let url = 'https://automation-viewer-backend.herokuapp.com/vk_data';
+        let data = {
+          'app_id': this.appId,
+          'login': sessionStorage.getItem('AV_login'),
+          'password': sessionStorage.getItem('AV_password')
+        };
+        getRequest(url, data).then(res => {
+          console.log(res['app_info']);
+          if (res['app_info'].length !== 0) {
+            for (let i in res['app_info']) {
+              this.tableItems.push(res['app_info'][i]['info']);
+            }
+            this.alert = false;
+
+            url = 'https://automation-viewer-backend.herokuapp.com/vk_data_analytics';
+            getRequest(url, data).then(res => {
+              console.log('\n\n\n', res);
+              this.m_liked = res['analytics']['mostly_liked'];
+              this.m_commented = res['analytics']['mostly_commented'];
+              this.m_reposted = res['analytics']['mostly_reposted'];
+
+              this.top = res['analytics']['top'];
+
+            }).catch(er => {
+              console.error(er);
+            }).finally(() => {
+              this.loadingData = false;
+            });
+
+          } else {
+            this.error = "Данное приложение не привязано к Automation Viewer, пожалуйста проверьте ввод данных"
+            this.alert = true;
           }
-        }
-        else {
-          this.error = "Данное приложение не привязано к Automation Viewer, пожалуйста проверьте ввод данных"
-          this.alert = true
-        }
-      }).catch(er => {
-        console.error(er);
-      });
+        }).catch(er => {
+          console.error(er);
+        }).finally(() => {
+
+        });
+      } else {
+        this.error = "Пожалуйста, выполните авторизацию"
+        this.alert = true;
+      }
     }
   },
   components: {
@@ -132,7 +200,7 @@ export default {
 }
 
 .statistics-div{
-  margin: 4px 0;
+  padding: 6px 8px;
   width: 100%;
   height: calc(100% - 8px);
 }
@@ -157,6 +225,6 @@ export default {
 
 }
 .get-app-data-btn{
-
+  margin: 4px 0;
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <div class="home">
       <DevInfo></DevInfo>
-      <v-btn v-if="auth" v-on:click="goToStat">Перейти к статистике</v-btn>
+      <v-btn color=#cd5c5c v-if="auth" v-on:click="goToStat">Перейти к статистике</v-btn>
     </div>
   </div>
 </template>

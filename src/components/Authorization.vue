@@ -68,7 +68,7 @@ import {sendData} from "@/functions";
 export default {
   name: 'Authorization',
   data: () => ({
-    authorized:false,
+    authorized: false,
     login: '',
     password: '',
     alert: false,

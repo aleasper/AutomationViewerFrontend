@@ -3,7 +3,7 @@
     <v-app id="inspire"
 
     >
-      <v-app-bar
+      <v-toolbar
           color= #cd5c5c
           dark
       >
@@ -21,12 +21,19 @@
         </div>
         <div id="nav">
           <router-link to="/">Главная</router-link> |
-          <router-link v-if="isAuth" to="/statistics">Статистика</router-link> |
-          <router-link to="/about">О разработчиках</router-link> |
-          <router-link to="/authorization">Авторизация</router-link>
-        </div>
-        <v-spacer></v-spacer>
-      </v-app-bar>
+          <router-link v-if="isAuth" to="/statistics">Статистика | </router-link>
+          <router-link to="/about">О разработчиках </router-link>
+          <router-link v-if="!isAuth" to="/authorization">| Авторизация</router-link>
+          </div>
+
+           <v-layout row wrap justify-end id="nav">
+             <v-flex shrink>
+                <v-icon v-if="isAuth" right dark>mdi-account</v-icon>
+                <router-link v-if="isAuth" to="/authorization">Выйти</router-link>
+             </v-flex>
+           </v-layout>
+
+      </v-toolbar>
       <div
           class="main-bg-img-div"
       >
@@ -86,6 +93,6 @@ export default {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/gra.png');
+  background-color: honeydew;
 }
 </style>

@@ -11,6 +11,6 @@
 <style>
 .org-label-text{
   font-size: 22px;
-  color: antiquewhite;
+  color: gray(1);
 }
 </style>

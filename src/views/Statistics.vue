@@ -185,6 +185,34 @@ export default {
         this.error = "Пожалуйста, выполните авторизацию"
         this.alert = true;
       }
+
+    },
+    saveXlsx(){
+      this.loadindXlsx = true;
+      let url = 'https://automation-viewer-backend.herokuapp.com/vk_data_xlsx';
+      let data = {
+        'app_id': this.appId,
+        'login': sessionStorage.getItem('AV_login'),
+        'password': sessionStorage.getItem('AV_password')
+      };
+      getRequest(url, data).then( res => {
+        if (res['ok']){
+          this.downloadBase64(res['base64'], 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,')
+        }else{
+          console.error(res);
+        }
+      }).catch().finally( () => {
+        this.loadindXlsx = false;
+      })
+    },
+    downloadBase64(base64string, prefix){
+      var link = document.createElement("a");
+      link.href = prefix + base64string;
+      link.style = "visibility:hidden";
+      link.download = 'statistics.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   },
   components: {

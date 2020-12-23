@@ -1,9 +1,6 @@
 <template>
   <div class="dev-info-div">
     <div class="org-label-text">
-      <p>Aleasper  NPO</p>
-    </div>
-    <div>
        <v-carousel
     cycle
     height="400"
@@ -65,10 +62,10 @@ export default {
 <style scoped>
 .dev-info-div{
   margin: 10px;
-  color: antiquewhite;
+  color: gray(1);
 }
 .org-label-text{
   font-size: 22px;
-  color: darkgray;
+  color: gray;
 }
 </style>

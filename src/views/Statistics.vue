@@ -2,15 +2,14 @@
   <div class="statistics-div">
     <v-row class="input-data-div">
       <v-col
-          md="2"
+          md="3"
       >
         <v-text-field
             class="app-id-input"
             v-model="appId"
             outlined
-            label="Application id"
-            color="white"
-            dark
+            label="Идентификатор сообщества"
+            color= "blue"
         >
         </v-text-field>
       </v-col>
@@ -28,6 +27,7 @@
       >
         <v-btn
             class="get-app-data-btn"
+            color=#cd5c5c
             v-on:click="getStat"
             :loading="loadingData"
         >Получить данные</v-btn>
@@ -195,8 +195,8 @@ export default {
 <style scoped>
 
 .v-text-field--outlined >>> fieldset {
-  border-color: rgba(255, 255, 255, 1);
-  color: white;
+  border-color: dodgerblue;
+  color: darkblue;
 }
 
 .statistics-div{
@@ -222,9 +222,10 @@ export default {
 }
 
 .app-id-input{
-
+  color: darksalmon;
 }
 .get-app-data-btn{
   margin: 4px 0;
+  color: darkblue;
 }
 </style>

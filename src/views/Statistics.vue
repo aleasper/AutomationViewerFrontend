@@ -42,9 +42,6 @@
             class="elevation-1"
             multi-sort
         ></v-data-table>
-        <v-btn
-            class="get-app-data-btn"
-        >Сохранить таблицу в .xlsx</v-btn>
       </div>
     </v-row>
     <v-row>
@@ -85,6 +82,13 @@
 
       </v-card>
     </v-row>
+    <v-btn
+        v-if="appId !== ''"
+        class="get-app-data-btn"
+        v-on:click="saveXlsx"
+    >
+      Сохранить таблицу в .xlsx
+    </v-btn>
   </div>
 </template>
 
@@ -216,7 +220,7 @@ export default {
     }
   },
   components: {
-  }
+  },
 }
 </script>
 

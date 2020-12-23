@@ -2,50 +2,52 @@
   <div class="statistics-div">
     <v-row class="input-data-div">
       <v-col
-          md="2"
+          md="3"
       >
         <v-text-field
             class="app-id-input"
             v-model="appId"
             outlined
-            label="Application id"
-            color="white"
-            dark
+            label="Идентификатор сообщества"
+            color= "blue"
         >
         </v-text-field>
       </v-col>
-       <v-alert
+      <v-col
+          md="1"
+      >
+        <v-btn
+            class="get-app-data-btn"
+            color=#cd5c5c
+            v-on:click="getStat"
+        >Получить данные</v-btn>
+      </v-col>
+    </v-row>
+    <v-alert
           :value="alert"
           color="red"
           dark
           border="top"
           icon="mdi-home"
           transition="scale-transition"
-        >
+    >
           Ошибка! {{error}}
-         </v-alert>
-      <v-col
-          md="1"
-      >
-        <v-btn
-            class="get-app-data-btn"
-            v-on:click="getStat"
-        >Получить данные</v-btn>
-      </v-col>
-    </v-row>
+    </v-alert>
+
     <div class="display-data-div">
       <v-data-table
           :headers="tableHeaders"
           :items="tableItems"
           :items-per-page="10"
-          class="elevation-1"
+          class="elevation-20"
           multi-sort
-      ></v-data-table>
+      >
+      </v-data-table>
       <v-divider></v-divider>
       <v-btn
       :loading="loading3"
       :disabled="loading3"
-      color=""
+      color=#cd5c5c
       class="get-app-data-btn"
       @click="loader = 'loading3'"
     >
@@ -127,12 +129,12 @@ export default {
 <style scoped>
 
 .v-text-field--outlined >>> fieldset {
-  border-color: rgba(255, 255, 255, 1);
-  color: white;
+  border-color: dodgerblue;
+  color: darkblue;
 }
 
 .statistics-div{
-  margin: 4px 0;
+  margin: 8px 0;
   width: 100%;
   height: calc(100% - 8px);
 }
@@ -154,9 +156,9 @@ export default {
 }
 
 .app-id-input{
-
+  color: darksalmon;
 }
 .get-app-data-btn{
-
+color: darkblue;
 }
 </style>

@@ -42,9 +42,7 @@
             class="elevation-1"
             multi-sort
         ></v-data-table>
-        <v-btn
-            class="get-app-data-btn"
-        >Сохранить таблицу в .xlsx</v-btn>
+        <xlsx></xlsx>
       </div>
     </v-row>
     <v-row>
@@ -85,11 +83,25 @@
 
       </v-card>
     </v-row>
+    <v-btn
+        class="get-app-data-btn"
+    >
+      <download-excel
+      class="get-app-data-btn"
+      :data="tableItems"
+      :fields="json_fields"
+      worksheet="Данные ПАСИПМ"
+      name="filename.xls"
+    >
+      Сохранить таблицу в .xlsx
+    </download-excel>
+    </v-btn>
   </div>
 </template>
 
 <script>
 import {getRequest} from '@/functions.js'
+import Xlsx from "@/components/xlsx";
 
 export default {
   name: "Statistics",
@@ -123,6 +135,52 @@ export default {
     m_commented: '',
     m_reposted: '',
     top: [],
+
+    json_fields: {
+      "Источники": "info.name",
+      Понравилось: "info.likes",
+      Комментарии: "info.comments",
+      Поделились: "info.reposts",
+    },
+    json_info: [{
+        id: "1",
+       info: {
+          likes: "1",
+         comments: "1",
+         reposts: "4",
+         name: "abcd",
+       }
+    }],
+    json_data: [
+      {
+        name: "Tony Peña",
+        city: "New York",
+        country: "United States",
+        birthdate: "1978-03-15",
+        phone: {
+          mobile: "1-541-754-3010",
+          landline: "(541) 754-3010",
+        },
+      },
+      {
+        name: "Thessaloniki",
+        city: "Athens",
+        country: "Greece",
+        birthdate: "1987-11-23",
+        phone: {
+          mobile: "+1 855 275 5071",
+          landline: "(2741) 2621-244",
+        },
+      },
+    ],
+    json_meta: [
+      [
+        {
+          key: "charset",
+          value: "utf-8",
+        },
+      ],
+    ],
   }),
   watch: {
     loader() {
@@ -216,7 +274,8 @@ export default {
     }
   },
   components: {
-  }
+    Xlsx
+  },
 }
 </script>
 

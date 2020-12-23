@@ -89,7 +89,9 @@ export default {
         console.log(res);
         if (res['ok']){
           this.authorized = true;
-          this.$router.push('/statistics');
+          sessionStorage.setItem('AV_login', this.login);
+          sessionStorage.setItem('AV_password', this.password);
+          this.$router.push({ path: '/statistics' });
           this.$store.commit('setAuth');
         } else {
           this.alert = true
